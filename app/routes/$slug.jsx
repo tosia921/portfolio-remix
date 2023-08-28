@@ -15,8 +15,8 @@ export const loader = async ({ request, params }) => {
 };
 
 export default function PostRoute() {
-    const { post, preview,params } = useLoaderData();
-    console.log(params)
+    const { post, preview } = useLoaderData();
+
 
   return preview?.token ? <PostPreview post={post} /> : <Post post={post} />;
 }

@@ -12,11 +12,11 @@ export default function Posts({ posts }) {
             to={post.slug.current}
             className="p-4 hover:bg-blue-50"
           >
-            <h2>{post.title}</h2>
+            <h2 className="font-normal font-heading">{post.title}</h2>
           </Link>
         ))
       ) : (
-        <div className="p-4 text-red-500">No posts found</div>
+        <div className="p-4">No posts found</div>
       )}
     </main>
   );
