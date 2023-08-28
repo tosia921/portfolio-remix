@@ -6,17 +6,16 @@ import { getClient } from "~/lib/sanity";
 import { getSession } from "~/sessions";
 
 export const loader = async ({ request, params }) => {
-    const session = await getSession(request.headers.get("Cookie"));
-    const token = session.get("preview");
-    const preview = token ? { token } : undefined;
-    const post = await getClient(preview).fetch(postQuery, params);
-  
-    return { post, preview, params };
+	const session = await getSession(request.headers.get("Cookie"));
+	const token = session.get("preview");
+	const preview = token ? { token } : undefined;
+	const post = await getClient(preview).fetch(postQuery, params);
+
+	return { post, preview, params };
 };
 
 export default function PostRoute() {
-    const { post, preview } = useLoaderData();
+	const { post, preview } = useLoaderData();
 
-
-  return preview?.token ? <PostPreview post={post} /> : <Post post={post} />;
+	return preview?.token ? <PostPreview post={post} /> : <Post post={post} />;
 }
