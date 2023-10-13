@@ -1,4 +1,4 @@
-import { createCookie, createFileSessionStorage } from '@vercel/remix' // or cloudflare/deno
+import { createCookie, createKvSessionStorage } from '@vercel/remix' // or cloudflare/deno
 
 // In this example the Cookie is created separately.
 const sessionCookie = createCookie('__session', {
@@ -6,7 +6,7 @@ const sessionCookie = createCookie('__session', {
 	sameSite: true,
 })
 
-const { getSession, commitSession, destroySession } = createFileSessionStorage({
+const { getSession, commitSession, destroySession } = createKvSessionStorage({
 	// The root directory where you want to store the files.
 	// Make sure it's writable!
 	dir: '/app/sessions',
