@@ -26,9 +26,9 @@ const EXPIRATION_DURATION_IN_SECONDS = 44200 // half a day
 const expires = new Date()
 expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
 
-const sessionCookie = createCookie('__session', {
+const sessionCookie = createCookie('preview', {
 	secrets: ['r3m1xr0ck1'],
-	sameSite: 'lax',
+	sameSite: true,
 	expires,
 })
 
