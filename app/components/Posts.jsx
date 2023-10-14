@@ -7,7 +7,7 @@ export default function Posts({ posts }) {
 		<main className="container mx-auto grid grid-cols-1 divide-y divide-blue-100">
 			{posts?.length > 0 ? (
 				posts.map((post) => (
-					<Link key={post._id} to={post.slug.current} className="p-4 hover:bg-blue-50">
+					<Link key={post._id} to={post.slug.current} className="p-4 hover:bg-gray-500">
 						<h2 className="font-heading font-normal">{post.title}</h2>
 					</Link>
 				))

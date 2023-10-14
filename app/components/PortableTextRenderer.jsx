@@ -120,22 +120,26 @@ const components = {
 	},
 	block: {
 		// Customizing common block types
-		h1: ({ children }) => <h1 className="mb-10 mt-0 text-4xl">{children}</h1>,
-		h2: ({ children }) => <h2 className="mb-10 mt-0 text-3xl">{children}</h2>,
-		h3: ({ children }) => <h3 className="mb-10 mt-0 text-2xl">{children}</h3>,
-		h4: ({ children }) => <h4 className="mb-10 mt-0 text-xl">{children}</h4>,
-		blockquote: ({ children }) => <blockquote className="border-l-purple-500">{children}</blockquote>,
-		normal: ({ children }) => <p className="mt-5">{children}</p>,
+		h1: ({ children }) => <h1 className="mb-10 mt-0 text-4xl text-zinc-50">{children}</h1>,
+		h2: ({ children }) => <h2 className="mb-10 mt-0 text-3xl text-zinc-50">{children}</h2>,
+		h3: ({ children }) => <h3 className="mb-10 mt-0 text-2xl text-zinc-50">{children}</h3>,
+		h4: ({ children }) => <h4 className="mb-10 mt-0 text-xl text-zinc-50">{children}</h4>,
+		blockquote: ({ children }) => <blockquote className="border-l-purple-500  text-zinc-50">{children}</blockquote>,
+		normal: ({ children }) => <p className="mt-5 text-zinc-50">{children}</p>,
 	},
 	list: {
 		// Customizing common list types
-		bullet: ({ children }) => <ul className="mb-10 mt-10">{children}</ul>,
-		number: ({ children }) => <ol className="mt-lg">{children}</ol>,
+		bullet: ({ children }) => <ul className="mb-10 mt-10 text-zinc-50">{children}</ul>,
+		number: ({ children }) => <ol className="mt-lg text-zinc-50">{children}</ol>,
 	},
 	listItem: {
 		// Customizing common list types
-		bullet: ({ children }) => <li style={{ listStyleType: 'disclosure-closed' }}>{children}</li>,
-		number: ({ children }) => <li className="mt-lg">{children}</li>,
+		bullet: ({ children }) => (
+			<li className="text-zinc-50" style={{ listStyleType: 'disclosure-closed' }}>
+				{children}
+			</li>
+		),
+		number: ({ children }) => <li className="mt-lg text-zinc-50">{children}</li>,
 	},
 }
 
