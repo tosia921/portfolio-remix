@@ -27,9 +27,17 @@ export const loader = async ({ request }) => {
 	const url = new URL(request.url)
 	const query = url.searchParams.get('slug')
 
-	return redirect(`/blog/${query}`, {
-		headers: {
-			'Set-Cookie': await commitSession(session),
-		},
-	})
+	if (query) {
+		return redirect(`/blog/${query}`, {
+			headers: {
+				'Set-Cookie': await commitSession(session),
+			},
+		})
+	} else {
+		return redirect(`/`, {
+			headers: {
+				'Set-Cookie': await commitSession(session),
+			},
+		})
+	}
 }

@@ -11,12 +11,16 @@ export const loader = async ({ request, params }) => {
 	const preview = token ? { token } : undefined
 	const post = await getClient(preview).fetch(postQuery, params)
 
-	return { post, preview, params }
+	return { token, post, preview, params }
 }
 
 // This code renders a page to display a blog post. It uses the useLoaderData hook to get the post data from the loader.
 export default function PostRoute() {
-	const { post, preview } = useLoaderData()
+	const { token, post, preview } = useLoaderData()
+
+	console.log(token)
+	console.log(post)
+	console.log(preview)
 
 	return preview?.token ? <PostPreview post={post} /> : <Post post={post} />
 }
