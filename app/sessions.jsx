@@ -23,14 +23,13 @@ import { createCookie } from '@vercel/remix'
 // For the example we use a very short duration to easily demonstrate its functionally.
 const EXPIRATION_DURATION_IN_SECONDS = 44200 // half a day
 
-const expires = new Date()
-expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
+// const expires = new Date()
+// expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
 
 const sessionCookie = createCookie('preview', {
 	secrets: ['r3m1xr0ck1'],
 	sameSite: 'None',
 	secure: true,
-	expires,
 })
 
 const { getSession, commitSession, destroySession } = createUpstashSessionStorage({ cookie: sessionCookie })
