@@ -28,8 +28,7 @@ expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
 
 const sessionCookie = createCookie('preview', {
 	secrets: ['r3m1xr0ck1'],
-	sameSite: 'None',
-	secure: true,
+	sameSite: 'Lax',
 	expires,
 })
 

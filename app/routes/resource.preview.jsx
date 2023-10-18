@@ -23,6 +23,8 @@ export const loader = async ({ request }) => {
 	// See note on your responsibility to secure this token
 	session.set(`preview`, process.env.SANITY_API_READ_TOKEN)
 
+	console.log(session)
+
 	// parse the search params for `?slug=`
 	const url = new URL(request.url)
 	const query = url.searchParams.get('slug')
