@@ -18,12 +18,8 @@ jobs:
       - name: Build Project Artifacts
         run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        #   run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
-        # - name: Get Preview URL
-        run: echo "URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | tail -n 1)" >> $GITHUB_OUTPUT
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            Preview URL ${{ steps.preview-deploy.outputs.URL }}
-          comment_tag: execution
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: echo "VERCEL_URL=$VERCEL_URL" >> $GITHUB_ENV
+
+
+
