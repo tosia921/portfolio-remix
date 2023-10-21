@@ -39,9 +39,9 @@ const DevelopmentSanityLivePreviewsessionCookie = createCookie('preview', {
 	sameSite: 'Lax',
 })
 
-const { getSession, commitSession, destroySession } =
-	process.env.NODE_ENV === 'development'
-		? createFileSessionStorage({ cookie: DevelopmentSanityLivePreviewsessionCookie, dir: './sessions' })
-		: createUpstashSessionStorage({ cookie: ProductionSanityLivePreviewsessionCookie })
+const { getSession, commitSession, destroySession } = createUpstashSessionStorage({ cookie: ProductionSanityLivePreviewsessionCookie })
+//process.env.NODE_ENV === 'development'
+//? createFileSessionStorage({ cookie: DevelopmentSanityLivePreviewsessionCookie, dir: './sessions' })
+//:
 
 export { getSession, commitSession, destroySession }
