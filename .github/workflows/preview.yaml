@@ -20,7 +20,5 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         id: preview-deploy
         run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Show Url
         run: echo ${{ steps.preview-deploy.outputs.Preview }}
-
-
-
