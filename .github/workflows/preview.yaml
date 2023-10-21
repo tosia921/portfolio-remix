@@ -28,7 +28,7 @@ jobs:
       - name: Do action
         uses: nefrob/pr-description@v1.1.1
         with:
-          content: 'Hello there!'
+          content: 'Preview URL: ${{ steps.preview-deploy.outputs.URL }}'
           regex: 'matchuntilthenend.*'
           regexFlags: i
           token: ${{ secrets.GITHUB_TOKEN }}
