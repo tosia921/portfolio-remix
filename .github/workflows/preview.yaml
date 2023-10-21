@@ -1,22 +1,30 @@
 name: Vercel Preview Deployment
-on: [pull_request]
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+on:
+  push:
+    branches-ignore:
+      - main
 jobs:
-  vercel:
+  Deploy-Preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Cache Dependencies
-        uses: actions/cache@v1
+      - uses: actions/checkout@v2
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: preview-deploy
+        run: echo "URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | tail -n 1)" >> $GITHUB_OUTPUT
+      - name: Show Url
+        run: echo ${{ steps.preview-deploy.outputs.URL }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
-      - name: Deploy to Staging
-        id: deploy-vercel-staging
-        uses: amondnet/vercel-action@v20
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
-          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
-          vercel-org-id: ${{ secrets.ORG_ID}} #Required
-          vercel-project-id: ${{ secrets.PROJECT_ID}} #Required
+          message: |
+            Preview URL ${{ steps.preview-deploy.outputs.URL }}
+          comment_tag: execution
