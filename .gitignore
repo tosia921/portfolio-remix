@@ -4,3 +4,4 @@ node_modules
 /.netlify
 /public/build
 .env
+.vercel
