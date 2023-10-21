@@ -2,6 +2,7 @@ name: Vercel Preview Deployment
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  PR_NUMBER: ${{ github.event.number }}
 on:
   push:
     branches-ignore:
@@ -27,3 +28,4 @@ jobs:
         with:
           message: |
             Hello world ! :wave:
+          pr_number: ${{ env.PR_NUMBER }} # This will comment on pull request #123
