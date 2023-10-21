@@ -10,7 +10,7 @@ jobs:
         uses: amondnet/vercel-action@v20
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-token: ${{ secrets.GIT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.ORG_ID}}
           vercel-project-id: ${{ secrets.PROJECT_ID}}
           # comment this out if not using vercel teams
@@ -19,7 +19,7 @@ jobs:
         id: loading_lighthouse_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
           header: lighthouse
           message: |
@@ -28,7 +28,7 @@ jobs:
         id: loading_budget_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
           header: budget
           message: |
@@ -82,7 +82,7 @@ jobs:
         if: ${{ always() }}
         uses: actions/github-script@v4
         with:
-          github-token: ${{secrets.GIT_TOKEN}}
+          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const assertions = ${{ steps.lighthouse_audit.outputs.assertionResults }};
             if (!assertions.length) {
@@ -107,7 +107,7 @@ jobs:
         if: ${{ always() }}
         uses: marocchino/sticky-pull-request-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
           header: lighthouse
           message: |
@@ -117,7 +117,7 @@ jobs:
         if: ${{ always() }}
         uses: marocchino/sticky-pull-request-comment@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           number: ${{ github.event.pull_request.number }}
           header: budget
           message: |
