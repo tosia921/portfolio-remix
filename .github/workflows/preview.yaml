@@ -26,5 +26,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Preview URL ${{ steps.preview-deploy.outputs.URL }}
-          comment_tag: execution
+            Hello world ! :wave:
