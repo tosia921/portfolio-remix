@@ -18,6 +18,7 @@
 
 import { createUpstashSessionStorage } from '~/sessions/upstash.server'
 import { createCookie } from '@vercel/remix'
+import { createFileSessionStorage } from '@remix-run/node'
 
 // This will set the length of the session.
 // For the example we use a very short duration to easily demonstrate its functionally.
@@ -26,13 +27,21 @@ const EXPIRATION_DURATION_IN_SECONDS = 44200 // half a day
 const expires = new Date()
 expires.setSeconds(expires.getSeconds() + EXPIRATION_DURATION_IN_SECONDS)
 
-const sessionCookie = createCookie('preview', {
+const ProductionSanityLivePreviewsessionCookie = createCookie('preview', {
 	secrets: ['r3m1xr0ck1'],
 	sameSite: 'None',
 	secure: true,
 	expires,
 })
 
-const { getSession, commitSession, destroySession } = createUpstashSessionStorage({ cookie: sessionCookie })
+const DevelopmentSanityLivePreviewsessionCookie = createCookie('preview', {
+	secrets: ['r3m1xr0ck1'],
+	sameSite: 'Lax',
+})
+
+const { getSession, commitSession, destroySession } =
+	process.env.NODE_ENV === 'development'
+		? createFileSessionStorage({ cookie: DevelopmentSanityLivePreviewsessionCookie, dir: './sessions' })
+		: createUpstashSessionStorage({ cookie: ProductionSanityLivePreviewsessionCookie })
 
 export { getSession, commitSession, destroySession }

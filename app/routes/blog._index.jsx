@@ -12,7 +12,7 @@ export const meta = () => {
 export const loader = async ({ request }) => {
 	// get a sesstion cookie token
 	const session = await getSession(request.headers.get('Cookie'))
-	const token = session.get('preview')
+	const token = session.get('sanity_preview')
 
 	// set preview to token if it exists
 	const preview = token ? { token } : undefined

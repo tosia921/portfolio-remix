@@ -7,7 +7,7 @@ import { getSession } from '~/sessions'
 
 export const loader = async ({ request, params }) => {
 	const session = await getSession(request.headers.get('Cookie'))
-	const token = session.get('preview')
+	const token = session.get('sanity_preview')
 	const preview = token ? { token } : undefined
 	const post = await getClient(preview).fetch(postQuery, params)
 

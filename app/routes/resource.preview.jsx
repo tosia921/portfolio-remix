@@ -21,7 +21,7 @@ export const action = async ({ request }) => {
 export const loader = async ({ request }) => {
 	const session = await getSession(request.headers.get('Cookie'))
 	// See note on your responsibility to secure this token
-	session.set(`preview`, process.env.SANITY_API_READ_TOKEN)
+	session.set(`sanity_preview`, process.env.SANITY_API_READ_TOKEN)
 
 	console.log(session)
 

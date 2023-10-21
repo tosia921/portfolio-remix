@@ -42,6 +42,8 @@ export default function App() {
 	const { preview } = useLoaderData()
 	const children = <Outlet />
 
+	if (process.env.NODE_ENV === 'development') console.log('dev env')
+
 	return (
 		<html lang="en">
 			<head>
