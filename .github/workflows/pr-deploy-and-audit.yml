@@ -1,26 +1,39 @@
-name: PR Deploy and Audit
+name: Vercel Preview Deployment
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  PR_NUMBER: ${{ github.event.number }}
 on: [pull_request]
 jobs:
-  deploy_and_audit:
+  Deploy-Preview:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
       - uses: actions/checkout@v2
-      - name: Vercel Action
-        id: vercel_action
-        uses: amondnet/vercel-action@v20
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        id: preview-deploy
+        run: echo "URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | tail -n 1)" >> $GITHUB_OUTPUT
+      - name: Show Url
+        run: echo ${{ steps.preview-deploy.outputs.URL }}
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID}}
-          vercel-project-id: ${{ secrets.PROJECT_ID}}
-          # comment this out if not using vercel teams
-          # scope: ${{ secrets.VERCEL_SCOPE }}
+          message: |
+            Preview URL: ${{ steps.preview-deploy.outputs.URL }}
+          pr_number: 11
       - name: Add comment to PR
         id: loading_lighthouse_comment_to_pr
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ github.event.pull_request.number }}
+          number: 11
           header: lighthouse
           message: |
             🚦 Running Lighthouse audit...
@@ -29,7 +42,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ github.event.pull_request.number }}
+          number: 11
           header: budget
           message: |
             ⏱ Running budget checks...
@@ -40,9 +53,8 @@ jobs:
           # add as many urls here as you wish to audit
           # prefixed by the preview-url
           urls: |
-            ${{ steps.vercel_action.outputs.preview-url }}
-            ${{ steps.vercel_action.outputs.preview-url }}/page1
-          budgetPath: '.github/lighthouse/budget.json'
+            ${{ steps.preview-deploy.outputs.URL }}
+          budgetPath: './budget.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
           runs: 3
@@ -108,7 +120,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ github.event.pull_request.number }}
+          number: 11
           header: lighthouse
           message: |
             ${{ steps.lighthouse_result.outputs.comment }}
@@ -118,7 +130,7 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ github.event.pull_request.number }}
+          number: 11
           header: budget
           message: |
             ${{ steps.budget_result.outputs.comment }}
