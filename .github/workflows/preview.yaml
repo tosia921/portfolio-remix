@@ -30,3 +30,4 @@ jobs:
         with:
           message: |
             Preview URL: ${{ steps.preview-deploy.outputs.URL }}
+          pr_number: $(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
