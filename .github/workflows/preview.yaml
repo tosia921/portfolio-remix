@@ -25,10 +25,8 @@ jobs:
         run: echo "URL=$(vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} | tail -n 1)" >> $GITHUB_OUTPUT
       - name: Show Url
         run: echo ${{ steps.preview-deploy.outputs.URL }}
-      - name: Do action
-        uses: nefrob/pr-description@v1.1.1
+        - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
         with:
-          content: 'Preview URL: ${{ steps.preview-deploy.outputs.URL }}'
-          regex: 'matchuntilthenend.*'
-          regexFlags: i
-          token: ${{ secrets.GITHUB_TOKEN }}
+          message: |
+            Preview URL: ${{ steps.preview-deploy.outputs.URL }}
