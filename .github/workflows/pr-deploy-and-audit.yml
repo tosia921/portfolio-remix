@@ -54,7 +54,6 @@ jobs:
           # prefixed by the preview-url
           urls: |
             ${{ steps.preview-deploy.outputs.URL }}
-            ${{ steps.vercel_action.outputs.preview-url }}/blog
           budgetPath: './budget.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
